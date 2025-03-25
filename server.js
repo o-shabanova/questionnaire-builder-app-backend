@@ -1,6 +1,16 @@
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const corsOptions = {
+    origin: ['http://localhost:3001', 'https://questionnaire-app-client.herokuapp.com'], // Allow specific frontend origins
+    methods: 'GET, POST, PUT, DELETE, OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true, // If using cookies or authentication
+};
+
+app.use(cors(corsOptions));
 
 const quizzes = [
     {
@@ -92,6 +102,13 @@ const quizzes = [
         completionCount: 124
     }
 ];
+
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(204); // No Content
+});
 
 app.get('/quizzes', (req, res) => {
     res.json(quizzes);
