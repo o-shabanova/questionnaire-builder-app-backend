@@ -4,7 +4,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-    origin: ['http://localhost:3001', 'https://questionnaire-app-client.herokuapp.com'], // Allow specific frontend origins
+    origin: [
+        'http://localhost:3001',
+        'https://questionnaire-app-client-63ff70b3d682.herokuapp.com/'
+    ], // Allow specific frontend origins
     methods: 'GET, POST, PUT, DELETE, OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true, // If using cookies or authentication
