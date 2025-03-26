@@ -12,6 +12,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.options('*', (req, res) => {
+    res.sendStatus(204); // No Content
+});
+
 app.get('/quizzes', async (req, res) => {
     try {
         const result = await pool.query(`
