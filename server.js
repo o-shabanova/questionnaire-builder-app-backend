@@ -44,6 +44,13 @@ app.get('/quizzes', async (req, res) => {
     }
 });
 
+app.options('/quizzes/:id', (req, res) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(204); // No Content
+});
+
 app.delete('/quizzes/:id', async (req, res) => {
     try {
         const { id } = req.params
