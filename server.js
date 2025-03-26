@@ -44,6 +44,21 @@ app.get('/quizzes', async (req, res) => {
     }
 });
 
+app.delete('/quizzes/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query(`DELETE FROM quizzes WHERE id = $1`, [id]);
+        res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        if (result.rowCount === 0) return res.status(404).json({ message: 'Item not found' });
+        res.status(200).json({ message: `Item ${id} deleted` });
+    } catch (error) {
+        console.error('Error fetching quizzes:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
